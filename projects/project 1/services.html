@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.7;
+            color: #1a1a1a;
+            background-color: #f9fafb;
+            overflow-x: hidden;
+        }
+
+        nav {
+            background: linear-gradient(135deg, #6b21a8, #db2777);
+            padding: 1.5rem 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: #fff;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .nav-links li a:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+            transform: scale(1.05);
+        }
+
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: #fff;
+            bottom: -2px;
+            left: 50%;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links li a:hover::after {
+            width: 70%;
+        }
+
+        .hero-section {
+            background: linear-gradient(180deg, rgba(107, 33, 168, 0.1), rgba(219, 39, 119, 0.1));
+            padding: 5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent);
+            animation: rotate 20s linear infinite;
+        }
+
+        .hero-section h1 {
+            font-size: 3.5rem;
+            color: #1e1e1e;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+            animation: slideIn 1s ease-out;
+        }
+
+        .hero-section h1 span {
+            color: #db2777;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            color: #4b5563;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        .services-section {
+            max-width: 1300px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .services-section h2 {
+            font-size: 2.5rem;
+            color: #1e1e1e;
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: slideIn 1s ease-out;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+            animation: fadeInUp 1.3s ease-out;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-card img {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.6rem;
+            color: #6b21a8;
+            margin-bottom: 1rem;
+        }
+
+        .service-card p {
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card a {
+            display: inline-block;
+            color: #db2777;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .service-card a:hover {
+            color: #6b21a8;
+        }
+
+        .cta-section {
+            margin: 5rem 0;
+            padding: 3rem;
+            background: linear-gradient(135deg, #db2777, #6b21a8);
+            color: #fff;
+            border-radius: 15px;
+            text-align: center;
+            animation: fadeIn 1.7s ease-out;
+        }
+
+        .cta-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-section a {
+            display: inline-block;
+            background: #fff;
+            color: #6b21a8;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-section a:hover {
+            background: #db2777;
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin: 2rem 0;
+            color: #db2777;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #6b21a8;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-section p {
+                font-size: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .nav-links li a {
+                font-size: 0.9rem;
+                padding: 0.5rem 0.8rem;
+            }
+
+            .services-section h2 {
+                font-size: 2rem;
+            }
+
+            .cta-section h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="/" class="logo">MySite</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/services">Services</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <h1>Our <span>Services</span></h1>
+        <p>Explore our comprehensive range of solutions designed to elevate your business and drive success.</p>
+    </section>
+
+    <section class="services-section">
+        <a href="/" class="back-link">← Back to Home</a>
+        <h2>What We Offer</h2>
+        <div class="services-grid">
+            <div class="service-card">
+            <img src="https://via.placeholder.com/200x150" alt="Web Development">
+                <h3>Web Development</h3>
+                <p>We craft responsive, high-performance websites tailored to your brand, using the latest technologies to ensure seamless user experiences.</p>
+                <a href="/contact">Learn More</a>
+            </div>
+            <div class="service-card">
+                <img src="https://via.placeholder.com/200x150" alt="UI/UX Design">
+                <h3>UI/UX Design</h3>
+                <p>Our team designs intuitive and visually stunning interfaces that enhance user engagement and satisfaction.</p>
+                <a href="/contact">Learn More</a>
+            </div>
+            <div class="service-card">
+                <img src="https://via.placeholder.com/200x150" alt="Digital Marketing">
+                <h3>Digital Marketing</h3>
+                <p>Boost your online presence with our data-driven strategies, including SEO, social media, and content marketing.</p>
+                <a href="/contact">Learn More</a>
+            </div>
+            <div class="service-card">
+                <img src="https://via.placeholder.com/200x150" alt="Cloud Solutions">
+                <h3>Cloud Solutions</h3>
+                <p>Scale your business with secure and efficient cloud infrastructure, customized to meet your unique needs.</p>
+                <a href="/contact">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <h2>Ready to Transform Your Business?</h2>
+        <p>Contact us today to discuss how our services can help you achieve your goals and take your business to the next level.</p>
+        <a href="/contact">Get in Touch</a>
+    </section>
+</body>
+</html>
