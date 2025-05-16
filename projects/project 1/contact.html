@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Contact Us</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet"/>
   <style>
     * {
       margin: 0;
@@ -14,82 +14,121 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #f4f6f8;
-      color: #111827;
-      line-height: 1.6;
+      background: #f9fafb;
+      color: #0f172a;
     }
 
     nav {
-      background: #1f2937;
+      background: rgba(255, 255, 255, 0.95);
       padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     .logo {
-      font-size: 1.5rem;
-      color: #fff;
+      color: #0f766e;
+      font-size: 1.6rem;
       font-weight: 700;
       text-decoration: none;
     }
 
     .nav-links {
+      list-style: none;
       display: flex;
       gap: 1.5rem;
     }
 
-    .nav-links a {
-      color: #d1d5db;
+    .nav-links li a {
+      color: #0f172a;
       text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s;
+      font-size: 0.95rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
-    .nav-links a:hover {
-      color: #f472b6;
+    .nav-links li a:hover {
+      background: #0f766e;
+      color: #fff;
     }
 
-    .hero {
+    .hero-section {
+      padding: 5rem 2rem;
       text-align: center;
-      padding: 4rem 2rem;
-      background: linear-gradient(to right, #9333ea, #ec4899);
-      color: white;
+      background: linear-gradient(180deg, #ecfeff 0%, #f9fafb 100%);
+      position: relative;
     }
 
-    .hero h1 {
-      font-size: 2.8rem;
+    .hero-section h1 {
+      font-size: 3rem;
       font-weight: 700;
+      color: #0f172a;
       margin-bottom: 1rem;
     }
 
-    .hero p {
-      font-size: 1.1rem;
-      max-width: 600px;
-      margin: 0 auto;
+    .hero-section h1 span {
+      color: #f43f5e;
+    }
+
+    .hero-section p {
+      font-size: 1.15rem;
+      color: #475569;
+      max-width: 680px;
+      margin: 0 auto 2rem;
+    }
+
+    .hero-section a {
+      background-color: #f43f5e;
+      color: white;
+      padding: 0.9rem 2rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .hero-section a:hover {
+      background-color: #0f766e;
+      transform: scale(1.05);
     }
 
     .contact-section {
-      max-width: 1100px;
-      margin: 3rem auto;
+      max-width: 1200px;
+      margin: 4rem auto;
+      padding: 0 2rem;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      padding: 0 1rem;
+      gap: 1.5rem;
     }
 
-    .card {
+    .contact-card {
       background: #ffffff;
-      padding: 2rem;
+      border: 1px solid #e5e7eb;
       border-radius: 12px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      padding: 1.5rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .card h2 {
-      margin-bottom: 1.5rem;
-      color: #6b21a8;
+    .contact-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .contact-card h2 {
+      color: #0f766e;
       font-size: 1.5rem;
+      margin-bottom: 1rem;
     }
 
     .contact-form form {
@@ -100,109 +139,128 @@
 
     .contact-form input,
     .contact-form textarea {
-      padding: 0.75rem 1rem;
-      border: 1px solid #d1d5db;
+      padding: 0.75rem;
+      border: 1px solid #e5e7eb;
       border-radius: 8px;
-      font-size: 1rem;
-      background-color: #f9fafb;
+      font-size: 0.95rem;
+      background: #f9fafb;
+      color: #0f172a;
     }
 
     .contact-form input:focus,
     .contact-form textarea:focus {
-      border-color: #ec4899;
+      border-color: #0f766e;
       outline: none;
-      background-color: #fff;
+      background: #fff;
     }
 
     .contact-form textarea {
-      min-height: 150px;
+      min-height: 120px;
       resize: vertical;
     }
 
     .contact-form button {
-      background: #ec4899;
+      background: #f43f5e;
       color: #fff;
       border: none;
-      padding: 0.75rem;
+      padding: 0.9rem;
       border-radius: 8px;
       font-weight: 600;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: background 0.3s ease, transform 0.2s ease;
     }
 
     .contact-form button:hover {
-      background: #9333ea;
+      background: #0f766e;
+      transform: scale(1.05);
     }
 
     .contact-info p {
-      margin-bottom: 1rem;
-      color: #374151;
+      color: #475569;
+      font-size: 0.95rem;
+      margin-bottom: 0.8rem;
     }
 
     .contact-info a {
-      color: #ec4899;
+      color: #0f766e;
       text-decoration: none;
+      transition: color 0.3s ease;
     }
 
     .contact-info a:hover {
-      text-decoration: underline;
+      color: #f43f5e;
     }
 
     .map-placeholder {
-      margin-top: 1.5rem;
-      height: 180px;
+      margin-top: 1rem;
+      height: 150px;
       background: #e5e7eb;
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #6b7280;
-      border-radius: 10px;
-      font-size: 1rem;
+      font-size: 0.95rem;
     }
 
     @media (max-width: 768px) {
+      .hero-section h1 {
+        font-size: 2rem;
+      }
+
+      .hero-section p {
+        font-size: 1rem;
+      }
+
       .contact-section {
         grid-template-columns: 1fr;
       }
 
-      .hero h1 {
-        font-size: 2rem;
+      .nav-links {
+        gap: 1rem;
+      }
+
+      .nav-links li a {
+        font-size: 0.9rem;
+        padding: 0.3rem 0.6rem;
       }
     }
   </style>
 </head>
 <body>
-
   <nav>
-    <a href="/" class="logo">MySite</a>
-    <div class="nav-links">
-      <a href="/">Home</a>
-      <a href="/about">About</a>
-      <a href="/services">Services</a>
-      <a href="/contact">Contact</a>
+    <div class="nav-container">
+      <a href="/" class="logo">GrowEasy</a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/services">Services</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
     </div>
   </nav>
 
-  <section class="hero">
-    <h1>Contact <span>Us</span></h1>
-    <p>We'd love to hear from you. Whether it's a question, feedback, or a project, let's connect!</p>
+  <section class="hero-section">
+    <h1>Contact <span>GrowEasy</span></h1>
+    <p>Reach out to us for questions, feedback, or to discuss your next project!</p>
+    <a href="/">Back to Home</a>
   </section>
 
   <section class="contact-section">
-    <div class="card contact-form">
+    <div class="contact-card contact-form">
       <h2>Send a Message</h2>
       <form action="/submit" method="POST">
         <input type="text" name="name" placeholder="Your Name" required />
         <input type="email" name="email" placeholder="Your Email" required />
         <input type="text" name="subject" placeholder="Subject" required />
         <textarea name="message" placeholder="Your Message" required></textarea>
-        <button type="submit">Send</button>
+        <button type="submit">Send Message</button>
       </form>
     </div>
 
-    <div class="card contact-info">
+    <div class="contact-card contact-info">
       <h2>Contact Details</h2>
-      <p><strong>Email:</strong> <a href="mailto:support@mysite.com">support@mysite.com</a></p>
+      <p><strong>Email:</strong> <a href="mailto:support@groweasy.com">support@groweasy.com</a></p>
       <p><strong>Phone:</strong> <a href="tel:+1234567890">+1 (234) 567-890</a></p>
       <p><strong>Address:</strong> 123 Innovation Drive, Tech City, TC 12345</p>
       <div class="map-placeholder">
@@ -210,6 +268,5 @@
       </div>
     </div>
   </section>
-
 </body>
 </html>
