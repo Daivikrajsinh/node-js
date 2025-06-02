@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+      /* Reset default styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: #f8fafc;
+        min-height: 100vh;
+        padding: 30px;
+        color: #1f2937;
+      }
+
+      /* Container */
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      /* Header styles */
+      .header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+      }
+
+      h1 {
+        font-size: 2.8rem;
+        font-weight: 800;
+        color: #111827;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.025em;
+        background: linear-gradient(90deg, #3b82f6, #10b981);
+        -webkit-text-fill-color: transparent;
+      }
+
+      .subtitle {
+        color: #64748b;
+        font-size: 1.1rem;
+        font-weight: 400;
+      }
+
+      /* Form card styling */
+      .form-card {
+        background: #ffffff;
+        padding: 2rem;
+        border-radius: 16px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        max-width: 600px;
+        margin: 0 auto 3rem;
+        border: 1px solid #e2e8f0;
+      }
+
+      .form-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #111827;
+        margin-bottom: 1.5rem;
+        text-align: center;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: #374151;
+        font-size: 0.95rem;
+      }
+
+      input[type="text"],
+      input[type="date"],
+      select {
+        width: 100%;
+        padding: 0.85rem;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        font-size: 1rem;
+        background: #f8fafc;
+        transition: all 0.2s ease;
+        color: #334155;
+      }
+
+      input[type="text"]::placeholder,
+      input[type="date"]::placeholder {
+        color: #94a3b8;
+      }
+
+      input[type="text"]:focus,
+      input[type="date"]:focus,
+      select:focus {
+        outline: none;
+        border-color: #3b82f6;
+        background: #ffffff;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      }
+
+      select {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 1.2rem;
+      }
+
+      .submit-btn {
+        width: 100%;
+        padding: 1rem;
+        background: linear-gradient(90deg, #3b82f6, #6366f1);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-top: 0.5rem;
+        box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3), 0 2px 4px -1px rgba(59, 130, 246, 0.1);
+      }
+
+      .submit-btn:hover {
+        background: linear-gradient(90deg, #2563eb, #4f46e5);
+        transform: translateY(-1px);
+        box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3), 0 4px 6px -2px rgba(59, 130, 246, 0.1);
+      }
+
+      .submit-btn:active {
+        transform: translateY(0);
+      }
+
+      /* Table section */
+      .table-section {
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        overflow: hidden;
+        border: 1px solid #e2e8f0;
+      }
+
+      .section-header {
+        padding: 1.5rem;
+        border-bottom: 1px solid #e2e8f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #111827;
+      }
+
+      .task-count {
+        background: #e0e7ff;
+        color: #4f46e5;
+        padding: 0.25rem 0.75rem;
+        border-radius: 999px;
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+
+      /* Table styling */
+      .data-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+      }
+
+      .data-table thead {
+        background-color: #f1f5f9;
+      }
+
+      .data-table th {
+        padding: 1rem 1.5rem;
+        text-align: left;
+        font-weight: 600;
+        color: #64748b;
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border-bottom: 1px solid #e2e8f0;
+      }
+
+      .data-table td {
+        padding: 1.25rem 1.5rem;
+        text-align: left;
+        border-bottom: 1px solid #e2e8f0;
+        color: #334155;
+        font-size: 0.95rem;
+      }
+
+      .data-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .data-table tr:hover {
+        background-color: #f8fafc;
+      }
+
+      /* Status badges */
+      .status-badge {
+        display: inline-block;
+        padding: 0.35rem 0.75rem;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      .status-pending {
+        background-color: #fee2e2;
+        color: #b91c1c;
+      }
+
+      .status-in-progress {
+        background-color: #fef3c7;
+        color: #92400e;
+      }
+
+      .status-completed {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+
+      /* Action buttons */
+      .action-buttons {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .action-btn {
+        padding: 0.5rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+      }
+
+      .delete-btn {
+        background: #fee2e2;
+        color: #ef4444;
+      }
+
+      .delete-btn:hover {
+        background: #ef4444;
+        color: white;
+      }
+
+      .edit-btn {
+        background: #e0e7ff;
+        color: #4f46e5;
+      }
+
+      .edit-btn:hover {
+        background: #4f46e5;
+        color: white;
+      }
+
+      /* Empty state */
+      .empty-state {
+        padding: 3rem 1.5rem;
+        text-align: center;
+        color: #64748b;
+      }
+
+      .empty-icon {
+        font-size: 3rem;
+        color: #cbd5e1;
+        margin-bottom: 1rem;
+      }
+
+      .empty-text {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        body {
+          padding: 1.5rem;
+        }
+
+        h1 {
+          font-size: 2.2rem;
+        }
+
+        .form-card {
+          padding: 1.5rem;
+        }
+
+        .data-table th,
+        .data-table td {
+          padding: 1rem;
+        }
+
+        .section-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.5rem;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .data-table {
+          display: block;
+          overflow-x: auto;
+        }
+
+        .action-buttons {
+          flex-wrap: wrap;
+        }
+      }
+
+      @media (max-width: 480px) {
+        h1 {
+          font-size: 2rem;
+        }
+
+        .form-group {
+          margin-bottom: 1.25rem;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        select,
+        .submit-btn {
+          padding: 0.75rem;
+          font-size: 0.9375rem;
+        }
+
+        .data-table td {
+          padding: 0.75rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Todo List</h1>
+        <p class="subtitle">Organize your tasks and boost productivity</p>
+      </div>
+
+      <div class="form-card">
+        <h2 class="form-title">Add New Task</h2>
+        <form action="/add" method="post">
+          <div class="form-group">
+            <label for="task_title">Task Title</label>
+            <input type="text" id="task_title" name="task_title" placeholder="Enter task title" required />
+          </div>
+          <div class="form-group">
+            <label for="task_desc">Description</label>
+            <input type="text" id="task_desc" name="task_desc" placeholder="Enter task description" required />
+          </div>
+          <div class="form-group">
+            <label for="status">Status</label>
+            <select id="status" name="status" required>
+              <option value="">Select Status</option>
+              <option value="pending">Pending</option>
+              <option value="in-progress">In Progress</option>
+              <option value="completed">Completed</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="deadline">Deadline</label>
+            <input type="date" id="deadline" name="deadline" required />
+          </div>
+          <button type="submit" class="submit-btn">
+            <i class="fas fa-plus"></i> Add Task
+          </button>
+        </form>
+      </div>
+
+      <div class="table-section">
+        <div class="section-header">
+          <h2 class="section-title">Your Tasks</h2>
+          <span class="task-count"><%= data.length %> tasks</span>
+        </div>
+        
+        <% if (data.length === 0) { %>
+          <div class="empty-state">
+            <div class="empty-icon">
+              <i class="far fa-clipboard"></i>
+            </div>
+            <p class="empty-text">No tasks found. Add your first task above!</p>
+          </div>
+        <% } else { %>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Deadline</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% data.forEach((item, index) => { %>
+              <tr>
+                <td><%= item.task_title %></td>
+                <td><%= item.task_desc %></td>
+                <td>
+                  <span class="status-badge status-<%= item.status.replace(' ', '-') %>">
+                    <%= item.status %>
+                  </span>
+                </td>
+                <td><%= new Date(item.deadline).toLocaleDateString() %></td>
+                <td>
+                  <div class="action-buttons">
+                    <a href="/delete/<%= index %>">
+                      <button class="action-btn delete-btn" title="Delete">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </a>
+                    <a href="/edit/<%= index %>">
+                      <button class="action-btn edit-btn" title="Edit">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        <% } %>
+      </div>
+    </div>
+  </body>
+</html>

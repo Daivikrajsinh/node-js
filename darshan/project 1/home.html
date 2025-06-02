@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Home | GrowEasy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #10b981;
+      --primary-dark: #0f766e;
+      --primary-light: #d1fae5;
+      --secondary: #f43f5e;
+      --dark: #0f172a;
+      --light: #f9fafb;
+      --gray: #64748b;
+      --light-gray: #e2e8f0;
+      --white: #ffffff;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+      --rounded-sm: 0.5rem;
+      --rounded-md: 0.75rem;
+      --rounded-lg: 1rem;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    nav {
+      background: rgba(255, 255, 255, 0.98);
+      padding: 1.25rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: var(--shadow-sm);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      color: var(--primary-dark);
+      font-size: 1.75rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo i {
+      font-size: 1.5rem;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.75rem;
+    }
+
+    .nav-links li a {
+      color: var(--dark);
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: var(--rounded-sm);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .nav-links li a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: var(--transition);
+    }
+
+    .nav-links li a:hover::after {
+      width: 70%;
+    }
+
+    .nav-links li a:hover {
+      color: var(--primary-dark);
+    }
+
+    .nav-links li a.active {
+      color: var(--primary-dark);
+      font-weight: 600;
+    }
+
+    .nav-links li a.active::after {
+      width: 70%;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.75rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: var(--rounded-md);
+      transition: var(--transition);
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: var(--white);
+      border: 2px solid var(--primary);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+      border-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--primary);
+      color: var(--white);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .hero-section {
+      padding: 6rem 2rem 5rem;
+      text-align: center;
+      background: linear-gradient(135deg, var(--primary-light) 0%, var(--light) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 60%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0) 70%);
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero-section h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+
+    .hero-section h1 span {
+      color: var(--primary-dark);
+      position: relative;
+    }
+
+    .hero-section h1 span::after {
+      content: '';
+      position: absolute;
+      bottom: 0.25rem;
+      left: 0;
+      width: 100%;
+      height: 0.5rem;
+      background: rgba(16, 185, 129, 0.3);
+      z-index: -1;
+      border-radius: 1rem;
+    }
+
+    .hero-section p {
+      font-size: 1.25rem;
+      color: var(--gray);
+      max-width: 680px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    .features-section {
+      max-width: 1400px;
+      margin: 5rem auto;
+      padding: 0 2rem;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-header h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--dark);
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-header h2::after {
+      content: '';
+      position: absolute;
+      bottom: -0.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    .section-header p {
+      color: var(--gray);
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: var(--white);
+      border-radius: var(--rounded-lg);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      border: 1px solid var(--light-gray);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary-light);
+    }
+
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--primary-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      color: var(--primary-dark);
+      font-size: 2rem;
+    }
+
+    .feature-card h3 {
+      color: var(--dark);
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .feature-card p {
+      color: var(--gray);
+      font-size: 1rem;
+    }
+
+    .testimonial-section {
+      background: var(--primary-light);
+      padding: 5rem 2rem;
+      position: relative;
+    }
+
+    .testimonial-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 20px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+    }
+
+    .testimonial-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .testimonial-card {
+      background: var(--white);
+      border-radius: var(--rounded-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      border: 1px solid var(--light-gray);
+    }
+
+    .testimonial-card::before {
+      content: '"';
+      position: absolute;
+      top: 1rem;
+      left: 1.5rem;
+      font-size: 4rem;
+      color: var(--primary-light);
+      font-family: serif;
+      line-height: 1;
+      z-index: 0;
+    }
+
+    .testimonial-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .testimonial-card p {
+      font-style: italic;
+      color: var(--dark);
+      font-size: 1.05rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-dark);
+      font-weight: 700;
+    }
+
+    .author-info h4 {
+      font-size: 1.1rem;
+      color: var(--dark);
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .author-info p {
+      font-style: normal;
+      color: var(--gray);
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .cta-section {
+      padding: 5rem 2rem;
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+      color: var(--white);
+      text-align: center;
+    }
+
+    .cta-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .cta-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-section p {
+      font-size: 1.2rem;
+      margin-bottom: 2.5rem;
+      opacity: 0.9;
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    .cta-buttons .btn-primary {
+      background: var(--white);
+      color: var(--primary-dark);
+      border-color: var(--white);
+    }
+
+    .cta-buttons .btn-primary:hover {
+      background: transparent;
+      color: var(--white);
+    }
+
+    .cta-buttons .btn-outline {
+      color: var(--white);
+      border-color: var(--white);
+    }
+
+    .cta-buttons .btn-outline:hover {
+      background: var(--white);
+      color: var(--primary-dark);
+    }
+
+    footer {
+      background: var(--dark);
+      color: var(--white);
+      padding: 4rem 2rem 2rem;
+    }
+
+    .footer-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 3rem;
+    }
+
+    .footer-logo {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+
+    .footer-about p {
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 1.5rem;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .social-links a {
+      color: var(--white);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .social-links a:hover {
+      background: var(--primary);
+      transform: translateY(-3px);
+    }
+
+    .footer-links h3 {
+      color: var(--white);
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 0.75rem;
+    }
+
+    .footer-links h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--primary);
+    }
+
+    .footer-links ul {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: var(--white);
+      padding-left: 5px;
+    }
+
+    .footer-bottom {
+      max-width: 1400px;
+      margin: 3rem auto 0;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 992px) {
+      .hero-section h1 {
+        font-size: 2.8rem;
+      }
+      
+      .section-header h2 {
+        font-size: 2.2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        padding: 1rem;
+      }
+      
+      .logo {
+        font-size: 1.5rem;
+      }
+      
+      .nav-links {
+        gap: 0.75rem;
+      }
+      
+      .hero-section {
+        padding: 4rem 1.5rem;
+      }
+      
+      .hero-section h1 {
+        font-size: 2.2rem;
+      }
+      
+      .hero-section p {
+        font-size: 1.1rem;
+      }
+      
+      .hero-cta {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .btn {
+        width: 100%;
+      }
+      
+      .section-header h2 {
+        font-size: 2rem;
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .nav-container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .nav-links {
+        width: 100%;
+        justify-content: space-around;
+      }
+      
+      .hero-section h1 {
+        font-size: 2rem;
+      }
+      
+      .section-header h2 {
+        font-size: 1.8rem;
+      }
+      
+      .footer-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-container">
+      <a href="/" class="logo">
+        <i class="fas fa-seedling"></i>
+        GrowEasy
+      </a>
+      <ul class="nav-links">
+        <li><a href="/" class="active">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/services">Services</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1>Scale Your Business with <span>GrowEasy</span></h1>
+      <p>Empower your business with scalable solutions designed for innovation and sustainable growth in today's competitive landscape.</p>
+      <div class="hero-cta">
+        <a href="/services" class="btn btn-primary">Get Started</a>
+        <a href="/about" class="btn btn-outline">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="features-section">
+    <div class="section-header">
+      <h2>Our Core Strengths</h2>
+      <p>We provide comprehensive solutions tailored to help your business thrive in the digital age</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-expand"></i>
+        </div>
+        <h3>Scalability</h3>
+        <p>Build systems that grow seamlessly with your business needs without compromising performance or reliability.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+        <h3>Reliability</h3>
+        <p>Enterprise-grade solutions with 99.9% uptime guarantee to keep your business running smoothly.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-tachometer-alt"></i>
+        </div>
+        <h3>Performance</h3>
+        <p>Optimized tools and infrastructure to boost efficiency, speed, and overall productivity.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-lock"></i>
+        </div>
+        <h3>Security</h3>
+        <p>End-to-end encryption and robust security protocols to protect your valuable data.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-headset"></i>
+        </div>
+        <h3>Support</h3>
+        <p>24/7 expert support to ensure you get the most out of our solutions at all times.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-lightbulb"></i>
+        </div>
+        <h3>Innovation</h3>
+        <p>Stay ahead with cutting-edge technologies and continuous platform improvements.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonial-section">
+    <div class="section-header">
+      <h2>Trusted by Industry Leaders</h2>
+      <p>Don't just take our word for it - hear what our clients say about working with us</p>
+    </div>
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-content">
+          <p>GrowEasy completely transformed our digital infrastructure. Their scalable solutions allowed us to handle 5x more traffic during peak seasons without any hiccups.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">ST</div>
+            <div class="author-info">
+              <h4>Sarah Thompson</h4>
+              <p>CEO, TechForward</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-content">
+          <p>The reliability of GrowEasy's platform is unmatched. We've achieved 99.99% uptime since migration, and our operational efficiency has improved by 40%.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">JC</div>
+            <div class="author-info">
+              <h4>James Carter</h4>
+              <p>COO, Global Retail</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-content">
+          <p>As a growing startup, we needed solutions that could scale with us. GrowEasy provided exactly that - their platform grows as we grow, saving us time and resources.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">MP</div>
+            <div class="author-info">
+              <h4>Maria Perez</h4>
+              <p>Founder, StartUp Labs</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="cta-container">
+      <h2>Ready to Scale Your Business?</h2>
+      <p>Join thousands of businesses growing with our platform. Get started today with a free consultation.</p>
+      <div class="cta-buttons">
+        <a href="/contact" class="btn btn-primary">Request Demo</a>
+        <a href="/pricing" class="btn btn-outline">View Plans</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-about">
+        <a href="/" class="footer-logo">
+          <i class="fas fa-seedling"></i> GrowEasy
+        </a>
+        <p>Empowering businesses with scalable solutions for sustainable growth in the digital era.</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h3>Company</h3>
+        <ul>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/careers">Careers</a></li>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="/press">Press</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h3>Products</h3>
+        <ul>
+          <li><a href="/solutions">Solutions</a></li>
+          <li><a href="/pricing">Pricing</a></li>
+          <li><a href="/features">Features</a></li>
+          <li><a href="/integrations">Integrations</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h3>Resources</h3>
+        <ul>
+          <li><a href="/support">Support</a></li>
+          <li><a href="/docs">Documentation</a></li>
+          <li><a href="/guides">Guides</a></li>
+          <li><a href="/community">Community</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2023 GrowEasy. All rights reserved. | <a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms of Service</a></p>
+    </div>
+  </footer>
+</body>
+</html>
