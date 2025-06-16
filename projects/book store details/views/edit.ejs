@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Book</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --bg-dark: #121212;
+        --bg-darker: #1e1e1e;
+        --primary: #3a86ff;
+        --accent: #8338ec;
+        --text: #f8f9fa;
+        --text-muted: #adb5bd;
+        --card-bg: #2a2a2a;
+        --input-bg: #3d3d3d;
+        --success: #4cc9f0;
+        --error: #f72585;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--bg-dark);
+        color: var(--text);
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-image: 
+          radial-gradient(circle at 25% 25%, rgba(58, 134, 255, 0.1) 0%, transparent 50%),
+          radial-gradient(circle at 75% 75%, rgba(131, 56, 236, 0.1) 0%, transparent 50%);
+      }
+
+      h1 {
+        text-align: center;
+        color: var(--text);
+        margin-bottom: 2rem;
+        font-size: 2.5rem;
+        font-weight: 700;
+        position: relative;
+        letter-spacing: 1px;
+      }
+
+      h1 span {
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        position: relative;
+      }
+
+      h1 span::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        border-radius: 2px;
+      }
+
+      .form-container {
+        width: 100%;
+        max-width: 700px;
+        margin: 0 auto;
+        background: var(--card-bg);
+        padding: 2.5rem;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .form-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 1.2rem;
+      }
+
+      td {
+        padding: 0.5rem;
+        vertical-align: middle;
+      }
+
+      label {
+        font-weight: 500;
+        color: var(--text);
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+        letter-spacing: 0.5px;
+      }
+
+      input[type="text"],
+      input[type="number"],
+      input[type="file"],
+      textarea,
+      select {
+        width: 100%;
+        padding: 0.9rem 1.2rem;
+        font-size: 1rem;
+        border: none;
+        border-radius: 10px;
+        background: var(--input-bg);
+        color: var(--text);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      input[type="text"]:focus,
+      input[type="number"]:focus,
+      textarea:focus,
+      select:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.2);
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 120px;
+        font-family: inherit;
+      }
+
+      .file-input-container {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        width: 100%;
+        border-radius: 10px;
+      }
+
+      .file-input-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.9rem 1.2rem;
+        background: var(--input-bg);
+        color: var(--text);
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 1px dashed rgba(255, 255, 255, 0.2);
+      }
+
+      .file-input-button:hover {
+        background: rgba(58, 134, 255, 0.1);
+        border-color: var(--primary);
+      }
+
+      .file-input-button i {
+        margin-right: 0.8rem;
+        font-size: 1.1rem;
+        color: var(--primary);
+      }
+
+      #image {
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+      }
+
+      .submit-row {
+        text-align: center;
+        padding-top: 1.5rem;
+      }
+
+      button {
+        padding: 1rem 2.5rem;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        color: white;
+        font-size: 1rem;
+        font-weight: 600;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        letter-spacing: 0.5px;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, var(--accent), var(--primary));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: -1;
+      }
+
+      button:hover::before {
+        opacity: 1;
+      }
+
+      button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(131, 56, 236, 0.3);
+      }
+
+      button:active {
+        transform: translateY(1px);
+      }
+
+      button i {
+        margin-right: 0.8rem;
+        font-size: 1.1rem;
+      }
+
+      .current-image {
+        margin-top: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .current-image img {
+        height: 100px;
+        width: 75px;
+        object-fit: cover;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .current-image img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+      }
+
+      .current-image span {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
+      /* Floating animation */
+      @keyframes float {
+        0%, 100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .floating {
+        animation: float 6s ease-in-out infinite;
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        body {
+          padding: 1.5rem;
+        }
+        
+        h1 {
+          font-size: 2rem;
+          margin-bottom: 1.5rem;
+        }
+        
+        .form-container {
+          padding: 1.5rem;
+        }
+        
+        td {
+          padding: 0.3rem;
+        }
+        
+        button {
+          width: 100%;
+          padding: 1rem;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .form-container {
+          padding: 1.2rem;
+        }
+        
+        input, textarea, button {
+          padding: 0.8rem 1rem;
+        }
+
+        table {
+          border-spacing: 0 0.8rem;
+        }
+      }
+
+      /* Form validation styles */
+      .error-message {
+        color: var(--error);
+        font-size: 0.8rem;
+        margin-top: 0.3rem;
+        display: none;
+      }
+
+      input:invalid, textarea:invalid {
+        border-color: var(--error);
+      }
+
+      input:valid, textarea:valid {
+        border-color: var(--success);
+      }
+
+      /* Loading state */
+      .loading {
+        position: relative;
+        pointer-events: none;
+        opacity: 0.8;
+      }
+
+      .loading::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        margin: -10px 0 0 -10px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-top-color: white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Edit <span class="floating">Book</span></h1>
+    <div class="form-container">
+      <form action="/updateBook" method="post" enctype="multipart/form-data" id="bookForm">
+        <input type="hidden" name="id" value="<%= bookData._id %>" />
+        <table>
+          <tr>
+            <td><label for="title">Title</label></td>
+            <td>
+              <input
+                type="text"
+                name="title"
+                id="title"
+                placeholder="Enter book title"
+                value="<%= bookData.title %>"
+                required
+              />
+              <div class="error-message">Please enter a valid title</div>
+            </td>
+          </tr>
+
+          <tr>
+            <td><label for="author">Author</label></td>
+            <td>
+              <input
+                type="text"
+                name="author"
+                id="author"
+                placeholder="Author's name"
+                value="<%= bookData.author %>"
+                required
+              />
+              <div class="error-message">Please enter the author's name</div>
+            </td>
+          </tr>
+
+          <tr>
+            <td><label for="price">Price</label></td>
+            <td>
+              <input
+                type="number"
+                name="price"
+                id="price"
+                placeholder="0.00"
+                step="0.01"
+                min="0"
+                value="<%= bookData.price %>"
+                required
+              />
+              <div class="error-message">Please enter a valid price</div>
+            </td>
+          </tr>
+
+          <tr>
+            <td><label for="description">Description</label></td>
+            <td>
+              <textarea
+                name="description"
+                id="description"
+                placeholder="Book description..."
+                required
+              ><%= bookData.description %></textarea>
+              <div class="error-message">Please enter a description</div>
+            </td>
+          </tr>
+
+          <tr>
+            <td><label for="image">Cover Image</label></td>
+            <td>
+              <div class="file-input-container">
+                <div class="file-input-button">
+                  <i class="fas fa-image"></i> Change Cover Image
+                </div>
+                <input type="file" name="image" id="image" accept="image/*" />
+              </div>
+              <div class="current-image">
+                <img src="<%= bookData.image %>" alt="Current cover" />
+                <span>Current cover image</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" class="submit-row">
+              <button type="submit" id="submitBtn">
+                <i class="fas fa-save"></i> Update Book
+              </button>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+
+    <script>
+      // Form validation
+      document.getElementById('bookForm').addEventListener('submit', function(e) {
+        let isValid = true;
+        const inputs = this.querySelectorAll('input[required], textarea[required]');
+        
+        inputs.forEach(input => {
+          const errorMsg = input.nextElementSibling;
+          if (!input.value.trim()) {
+            errorMsg.style.display = 'block';
+            isValid = false;
+          } else {
+            errorMsg.style.display = 'none';
+          }
+        });
+
+        if (!isValid) {
+          e.preventDefault();
+        } else {
+          // Show loading state
+          const submitBtn = document.getElementById('submitBtn');
+          submitBtn.classList.add('loading');
+          submitBtn.innerHTML = '<i class="fas fa-spinner"></i> Updating...';
+        }
+      });
+
+      // Real-time validation
+      document.querySelectorAll('input[required], textarea[required]').forEach(input => {
+        input.addEventListener('input', function() {
+          const errorMsg = this.nextElementSibling;
+          if (!this.value.trim()) {
+            errorMsg.style.display = 'block';
+          } else {
+            errorMsg.style.display = 'none';
+          }
+        });
+      });
+
+      // Preview image when selected
+      document.getElementById('image').addEventListener('change', function(e) {
+        if (this.files && this.files[0]) {
+          const reader = new FileReader();
+          reader.onload = function(event) {
+            document.querySelector('.current-image img').src = event.target.result;
+          }
+          reader.readAsDataURL(this.files[0]);
+        }
+      });
+    </script>
+  </body>
+</html>
