@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Movie</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+   :root {
+  --primary: #6a0dad;
+  --secondary: #a084ca;
+  --dark: #ffffff;
+  --darker: #f9f9f9;
+  --light: #444;
+  --lighter: #222;
+  --accent: #d72638;
+  --text: #222;
+  --text-light: #555;
+  --card-bg: #f0f0f0;
+  --card-hover: #e0e0e0;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  --border: #cccccc;
+}
+
+body {
+  background-color: var(--dark);
+  color: var(--text);
+}
+
+h1 {
+  color: var(--lighter);
+}
+
+header p {
+  color: var(--text-light);
+}
+
+.form-container {
+  background-color: var(--card-bg);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.form-container:hover {
+  background-color: var(--card-hover);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+label {
+  color: var(--light);
+}
+
+input, textarea, select {
+  background-color: #fff;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+input:focus, textarea:focus, select:focus {
+  background-color: #fff;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.2);
+}
+
+.btn-primary {
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  color: white;
+  box-shadow: 0 4px 15px rgba(106, 13, 173, 0.3);
+}
+
+.movie-poster {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--dark);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 0;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--lighter);
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
+    }
+
+    header p {
+      color: var(--text-light);
+    }
+
+    header::after {
+      content: '';
+      display: block;
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      margin: 1rem auto;
+      border-radius: 2px;
+    }
+
+    /* Form Styling */
+    .form-container {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 2.5rem;
+      margin-bottom: 3rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid var(--border);
+    }
+
+    .form-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      background-color: #252525;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group.full-width {
+      grid-column: span 2;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--light);
+      font-size: 0.95rem;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      background-color: #2a2a2a;
+      color: var(--text);
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.2);
+      background-color: #333333;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.8rem 1.8rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      font-size: 0.95rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      color: white;
+      box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(138, 43, 226, 0.5);
+    }
+
+    .movie-poster {
+      width: 80px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 6px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .movie-poster:hover {
+      transform: scale(1.05);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animated {
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    .delay-1 { animation-delay: 0.1s; }
+
+    /* Toggle Switch for Dark/Light Mode */
+    .theme-switch {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #333;
+      transition: .4s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+
+    .slider i {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: white;
+      font-size: 14px;
+    }
+
+    .fa-moon {
+      left: 8px;
+    }
+
+    .fa-sun {
+      right: 8px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      .form-group.full-width {
+        grid-column: span 1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1.5rem;
+      }
+      h1 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Theme Toggle Switch -->
+  <div class="theme-switch">
+    <label class="switch">
+      <input type="checkbox" id="theme-toggle">
+      <span class="slider">
+        <i class="fas fa-moon"></i>
+        <i class="fas fa-sun"></i>
+      </span>
+    </label>
+  </div>
+
+  <div class="container">
+    <header class="animated">
+      <h1>Edit Movie</h1>
+      <p>Update the details of your movie</p>
+    </header>
+
+    <div class="form-container animated delay-1">
+      <h2 style="margin-bottom: 1.5rem; color: var(--lighter);">Edit Movie Details</h2>
+      <form action="/updateMovie" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="<%= movieData._id %>" />
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="title">Movie Title</label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              placeholder="Enter movie title (e.g., The Shawshank Redemption)"
+              value="<%= movieData.title %>"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="director">Director</label>
+            <input
+              type="text"
+              id="director"
+              name="director"
+              placeholder="Enter director's name (e.g., Christopher Nolan)"
+              value="<%= movieData.director %>"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="releaseYear">Release Year</label>
+            <input
+              type="number"
+              id="releaseYear"
+              name="releaseYear"
+              placeholder="Enter release year (e.g., 1994)"
+              value="<%= movieData.releaseYear %>"
+              min="1900"
+              max="2030"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="rating">Rating (0-10)</label>
+            <input
+              type="number"
+              id="rating"
+              name="rating"
+              placeholder="Enter rating (e.g., 8.7)"
+              value="<%= movieData.rating %>"
+              step="0.1"
+              min="0"
+              max="10"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="duration">Duration</label>
+            <input
+              type="text"
+              id="duration"
+              name="duration"
+              placeholder="Enter duration (e.g., 2h 22m)"
+              value="<%= movieData.duration %>"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="image">Poster Image</label>
+            <input type="file" id="image" name="image" accept="image/*" />
+            <img src="<%= movieData.image %>" class="movie-poster" alt="<%= movieData.title %>" />
+          </div>
+
+          <div class="form-group full-width">
+            <label for="description">Description</label>
+            <textarea
+              id="description"
+              name="description"
+              placeholder="Enter movie plot description (e.g., Two imprisoned men bond over a number of years...)"
+              required
+            ><%= movieData.description %></textarea>
+          </div>
+        </div>
+
+        <div style="text-align: right; margin-top: 1rem;">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i> Update Movie
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

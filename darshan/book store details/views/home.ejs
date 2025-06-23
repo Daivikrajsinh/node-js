@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --bg-dark: #121212;
+        --bg-darker: #1e1e1e;
+        --primary: #3a86ff;
+        --accent: #8338ec;
+        --text: #f8f9fa;
+        --text-muted: #adb5bd;
+        --card-bg: #2a2a2a;
+        --input-bg: #3d3d3d;
+        --success: #4cc9f0;
+        --error: #f72585;
+        --edit: #4cc9f0;
+        --delete: #f72585;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--bg-dark);
+        color: var(--text);
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        background-image: 
+          radial-gradient(circle at 25% 25%, rgba(58, 134, 255, 0.1) 0%, transparent 50%),
+          radial-gradient(circle at 75% 75%, rgba(131, 56, 236, 0.1) 0%, transparent 50%);
+      }
+
+      h1 {
+        text-align: center;
+        color: var(--text);
+        margin: 2rem 0;
+        font-size: 2.8rem;
+        font-weight: 700;
+        position: relative;
+        letter-spacing: 1px;
+      }
+
+      h1 span {
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        position: relative;
+      }
+
+      h1 span::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        border-radius: 2px;
+      }
+
+      .form-container {
+        max-width: 700px;
+        margin: 0 auto 3rem;
+        background: var(--card-bg);
+        padding: 2.5rem;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .form-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 1rem;
+      }
+
+      td {
+        padding: 0.8rem 1rem;
+        vertical-align: middle;
+      }
+
+      label {
+        font-weight: 500;
+        color: var(--text);
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+        letter-spacing: 0.5px;
+      }
+
+      input[type="text"],
+      input[type="number"],
+      input[type="file"],
+      textarea,
+      select {
+        width: 100%;
+        padding: 0.9rem 1.2rem;
+        font-size: 1rem;
+        border: none;
+        border-radius: 10px;
+        background: var(--input-bg);
+        color: var(--text);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      input[type="text"]:focus,
+      input[type="number"]:focus,
+      textarea:focus,
+      select:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.2);
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 120px;
+        font-family: inherit;
+      }
+
+      .file-input-container {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        width: 100%;
+        border-radius: 10px;
+      }
+
+      .file-input-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.9rem 1.2rem;
+        background: var(--input-bg);
+        color: var(--text);
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 1px dashed rgba(255, 255, 255, 0.2);
+      }
+
+      .file-input-button:hover {
+        background: rgba(58, 134, 255, 0.1);
+        border-color: var(--primary);
+      }
+
+      .file-input-button i {
+        margin-right: 0.8rem;
+        font-size: 1.1rem;
+        color: var(--primary);
+      }
+
+      #image {
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+      }
+
+      .submit-row {
+        text-align: center;
+        padding-top: 1.5rem;
+      }
+
+      button {
+        padding: 1rem 2.5rem;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        color: white;
+        font-size: 1rem;
+        font-weight: 600;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        letter-spacing: 0.5px;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, var(--accent), var(--primary));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: -1;
+      }
+
+      button:hover::before {
+        opacity: 1;
+      }
+
+      button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(131, 56, 236, 0.3);
+      }
+
+      button:active {
+        transform: translateY(1px);
+      }
+
+      button i {
+        margin-right: 0.8rem;
+        font-size: 1.1rem;
+      }
+
+      .books-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto 3rem;
+        animation: fadeIn 1s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .books-table {
+        width: 100%;
+        background: var(--card-bg);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        border-collapse: separate;
+        border-spacing: 0;
+      }
+
+      .books-table thead {
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+      }
+
+      .books-table th {
+        padding: 1.2rem;
+        text-align: left;
+        font-weight: 600;
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.9rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .books-table td {
+        padding: 1rem 1.2rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        vertical-align: middle;
+      }
+
+      .books-table tbody tr {
+        transition: all 0.3s ease;
+      }
+
+      .books-table tbody tr:last-child td {
+        border-bottom: none;
+      }
+
+      .books-table tbody tr:hover {
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      .books-table img {
+        height: 80px;
+        width: 60px;
+        object-fit: cover;
+        border-radius: 6px;
+        transition: all 0.4s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .books-table img:hover {
+        transform: scale(1.5);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 0.8rem;
+      }
+
+      .action-btn {
+        padding: 0.6rem 1rem;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        transition: all 0.3s ease;
+      }
+
+      .edit-btn {
+        background: var(--edit);
+      }
+
+      .edit-btn:hover {
+        background: #56d3fa;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(76, 201, 240, 0.3);
+      }
+
+      .delete-btn {
+        background: var(--delete);
+      }
+
+      .delete-btn:hover {
+        background: #ff2d91;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(247, 37, 133, 0.3);
+      }
+
+      .empty-message {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: var(--text-muted);
+        font-size: 1.1rem;
+        background: var(--card-bg);
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .empty-message i {
+        font-size: 3.5rem;
+        margin-bottom: 1.5rem;
+        color: var(--primary);
+        opacity: 0.7;
+      }
+
+      .empty-message h3 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      .empty-message p {
+        max-width: 400px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+
+      /* Floating animation */
+      @keyframes float {
+        0%, 100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .floating {
+        animation: float 6s ease-in-out infinite;
+      }
+
+      /* Responsive design */
+      @media (max-width: 992px) {
+        .form-container {
+          padding: 2rem;
+        }
+        
+        .books-table {
+          display: block;
+          overflow-x: auto;
+        }
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2.2rem;
+          margin: 1.5rem 0;
+        }
+        
+        .form-container {
+          padding: 1.5rem;
+        }
+        
+        .books-table th, 
+        .books-table td {
+          padding: 0.8rem;
+        }
+        
+        .action-buttons {
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+        
+        .action-btn {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+
+      @media (max-width: 576px) {
+        body {
+          padding: 1rem;
+        }
+        
+        .form-container {
+          padding: 1.2rem;
+        }
+        
+        input, textarea, button {
+          padding: 0.8rem 1rem;
+        }
+        
+        .books-table {
+          font-size: 0.9rem;
+        }
+        
+        .books-table img {
+          height: 60px;
+          width: 45px;
+        }
+      }
+
+      /* Tooltip for book description */
+      .description-tooltip {
+        position: relative;
+        cursor: pointer;
+      }
+
+      .description-tooltip:hover::after {
+        content: attr(data-full-description);
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--card-bg);
+        color: var(--text);
+        padding: 0.8rem 1rem;
+        border-radius: 8px;
+        width: 300px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        z-index: 10;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        pointer-events: none;
+      }
+
+      /* Loading animation */
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      .loading {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-top-color: white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-right: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1><span class="floating">Book</span> Store</h1>
+    <div class="form-container">
+      <form action="/submit-book" method="post" enctype="multipart/form-data" id="bookForm">
+        <table>
+          <tr>
+            <td><label for="title">Title</label></td>
+            <td>
+              <input
+                type="text"
+                name="title"
+                id="title"
+                placeholder="Enter book title"
+                required
+              />
+              <div class="error-message" style="display: none; color: var(--error); font-size: 0.8rem; margin-top: 0.3rem;">Please enter a valid title</div>
+            </td>
+          </tr>
+
+          <tr>
+            <td><label for="author">Author</label></td>
+            <td>
+              <input
+                type="text"
+                name="author"
+                id="author"
+                placeholder="Author's name"
+                required
+              />
+              <div class="error-message" style="display: none; color: var(--error); font-size: 0.8rem; margin-top: 0.3rem;">Please enter the author's name</div>
+            </td>
+          </tr>
+
+          <tr>
+            <td><label for="price">Price</label></td>
+            <td>
+              <input
+                type="number"
+                name="price"
+                id="price"
+                placeholder="0.00"
+                step="0.01"
+                min="0"
+                required
+              />
+              <div class="error-message" style="display: none; color: var(--error); font-size: 0.8rem; margin-top: 0.3rem;">Please enter a valid price</div>
+            </td>
+          </tr>
+
+          <tr>
+            <td><label for="description">Description</label></td>
+            <td>
+              <textarea
+                name="description"
+                id="description"
+                placeholder="Book description..."
+                required
+              ></textarea>
+              <div class="error-message" style="display: none; color: var(--error); font-size: 0.8rem; margin-top: 0.3rem;">Please enter a description</div>
+            </td>
+          </tr>
+
+          <tr>
+            <td><label for="image">Cover Image</label></td>
+            <td>
+              <div class="file-input-container">
+                <div class="file-input-button">
+                  <i class="fas fa-image"></i> Choose Cover Image
+                </div>
+                <input type="file" name="image" id="image" accept="image/*" required />
+              </div>
+              <div class="error-message" style="display: none; color: var(--error); font-size: 0.8rem; margin-top: 0.3rem;">Please select an image</div>
+              <div id="image-preview" style="margin-top: 1rem; display: none;">
+                <img id="preview-image" src="#" alt="Preview" style="height: 100px; width: 75px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+                <span style="display: block; color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem;">Image Preview</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" class="submit-row">
+              <button type="submit" id="submitBtn">
+                <i class="fas fa-plus"></i> Add Book
+              </button>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+
+    <div class="books-container">
+      <% if (showBook && showBook.length > 0) { %>
+        <table class="books-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Price</th>
+              <th>Description</th>
+              <th>Cover</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% showBook.forEach((books,id)=>{ %>
+            <tr>
+              <td><strong><%= books.title %></strong></td>
+              <td><%= books.author %></td>
+              <td>$<%= books.price.toFixed(2) %></td>
+              <td class="description-tooltip" data-full-description="<%= books.description %>">
+                <%= books.description.length > 30 ? books.description.substring(0, 30) + '...' : books.description %>
+              </td>
+              <td>
+                <img
+                  src="<%= books.image %>"
+                  alt="<%= books.title %> cover"
+                />
+              </td>
+              <td>
+                <div class="action-buttons">
+                  <a href="/editBook/<%= books.id %>">
+                    <button type="button" class="action-btn edit-btn">
+                      <i class="fas fa-edit"></i> Edit
+                    </button>
+                  </a>
+                  <a href="/deleteBook/?bookId=<%= books._id %>" onclick="return confirm('Are you sure you want to delete this book?')">
+                    <button type="button" class="action-btn delete-btn">
+                      <i class="fas fa-trash"></i> Delete
+                    </button>
+                  </a>
+                </div>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } else { %>
+        <div class="empty-message">
+          <i class="fas fa-book-open floating"></i>
+          <h3>Your Library is Empty</h3>
+          <p>Add your first book to begin your collection</p>
+        </div>
+      <% } %>
+    </div>
+
+    <script>
+      // Form validation
+      document.getElementById('bookForm').addEventListener('submit', function(e) {
+        let isValid = true;
+        const inputs = this.querySelectorAll('input[required], textarea[required]');
+        
+        inputs.forEach(input => {
+          const errorMsg = input.nextElementSibling;
+          if (!input.value.trim()) {
+            errorMsg.style.display = 'block';
+            isValid = false;
+          } else {
+            errorMsg.style.display = 'none';
+          }
+        });
+
+        if (!isValid) {
+          e.preventDefault();
+        } else {
+          // Show loading state
+          const submitBtn = document.getElementById('submitBtn');
+          submitBtn.innerHTML = '<span class="loading"></span> Adding...';
+          submitBtn.disabled = true;
+        }
+      });
+
+      // Real-time validation
+      document.querySelectorAll('input[required], textarea[required]').forEach(input => {
+        input.addEventListener('input', function() {
+          const errorMsg = this.nextElementSibling;
+          if (!this.value.trim()) {
+            errorMsg.style.display = 'block';
+          } else {
+            errorMsg.style.display = 'none';
+          }
+        });
+      });
+
+      // Image preview
+      document.getElementById('image').addEventListener('change', function(e) {
+        const previewContainer = document.getElementById('image-preview');
+        const previewImage = document.getElementById('preview-image');
+        const errorMsg = this.nextElementSibling.nextElementSibling;
+        
+        if (this.files && this.files[0]) {
+          const reader = new FileReader();
+          
+          reader.onload = function(event) {
+            previewImage.src = event.target.result;
+            previewContainer.style.display = 'block';
+            errorMsg.style.display = 'none';
+          }
+          
+          reader.readAsDataURL(this.files[0]);
+        } else {
+          previewContainer.style.display = 'none';
+        }
+      });
+
+      // Confirm before delete
+      document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          if (!confirm('Are you sure you want to delete this book?')) {
+            e.preventDefault();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
