@@ -4,7 +4,7 @@ const app = express();
 const userRouter = require("./routes/userRouter");
 const dashboardRouter = require("./routes/dashboardRouter");
 
-const PORT = 3690; 
+const PORT = 7070; 
 app.set("view engine", "ejs");
  
 app.use(express.urlencoded({ extended: true }));

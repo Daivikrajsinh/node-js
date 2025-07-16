@@ -1,7 +1,6 @@
 const express = require("express");
 const UserModal = require("../models/userModel");
 const userRouter = express.Router();
-const nodemailer = require("nodemailer");
  
 userRouter.get("/signin", (req, res) => {
   return res.render("signIn");
